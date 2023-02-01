@@ -1,0 +1,104 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #fafafa;
+  color: #212121;
+  line-height: 1.5;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.search-form {
+  height: 80px;
+  background-color: rgb(35, 90, 192);
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  position: fixed;
+  width: 100%;
+  box-shadow: 0 0 3px 3px rgb(35, 90, 192);
+}
+
+/* .search-form::after {
+  content: "";
+  clear: both;
+  display: table;
+} */
+
+input {
+  height: 40px;
+  margin: 20px 0;
+  border: 1px solid grey;
+  border-right: none;
+  border-radius: 5px;
+  padding: 10px;
+  width: 250px;
+  float: left;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
+  transition: box-shadow 0.2s linear;
+}
+
+input:focus {
+  outline: none;
+  border-color: rgb(35, 90, 192);
+  box-shadow: inset 0 0 1px 1px rgb(35, 90, 192);
+}
+
+.searchButton {
+  margin: 20px 0;
+  float: left;
+  width: 50px;
+  padding: 10px;
+  background: rgb(207, 204, 204);
+  color: black;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none;
+  border-left: none;
+  cursor: pointer;
+  border-radius: 5px;
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 0;
+  transition: 0.3s linear;
+}
+
+button:hover {
+  background: rgb(187, 184, 184);
+}
+
+.load-more {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 40px;
+  width: 140px;
+  text-transform: uppercase;
+  color: white;
+  font-size: 16px;
+  margin-top: 30px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(35, 90, 192);
+  box-shadow: 0 0 1px 1px rgb(35, 90, 192);
+}
+
+.load-more:hover {
+  background-color: rgb(15, 70, 172);
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}

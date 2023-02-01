@@ -3,8 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <title>Homework 9</title>
-    <link rel="stylesheet" href="css/common.css" />
   </head>
   <body>
     <form class="search-form" id="search-form">
@@ -14,9 +17,12 @@
         autocomplete="off"
         placeholder="Search images..."
       />
-      <button type="submit">Search</button>
+      <button class="searchButton" type="submit">
+        <i class="fa fa-search"></i>
+      </button>
     </form>
-    <button type="button" class="load-more">Load more</button>
+    <div class="gallery"></div>
+    <button type="button" class="load-more hidden">Load more</button>
     <script src="js/index.js" type="module"></script>
   </body>
 </html>
