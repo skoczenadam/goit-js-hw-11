@@ -1,8 +1,7 @@
 import '../css/formGallery.css';
 import Notiflix from 'notiflix';
 import SimpleLightbox from "simplelightbox";
-
-console.log('start');
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 const inputName = document.querySelector('[name="searchQuery"]');
 const searchButton = document.querySelector(".searchButton");
@@ -15,6 +14,8 @@ const orientation = "horizontal";
 const safesearch = true;
 
 let maxPictures = 0;
+
+var lightbox = new SimpleLightbox('.gallery a', { captionsData: 'alt', captionDelay: 250, });
 
 loadMoreButton.addEventListener("click", () => {
     page += 1;
@@ -30,7 +31,8 @@ loadMoreButton.addEventListener("click", () => {
 })
 
 const activeFetch = (e) => {
-  e.preventDefault();
+    e.preventDefault();
+    maxPictures = 0;
     loadMoreButton.classList.add("hidden");
     galleryContainer.innerHTML = "";
     page = 1;
@@ -65,14 +67,14 @@ function fetchItems(itemName) {
 };
 
 function renderItems(items) {
-    console.log(items);
     maxPictures += 40;
-    console.log(maxPictures)
     if (items.hits.length === 0) return Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
     const markup = items.hits
-        .map(({webformatURL, tags, likes, views, comments, downloads}) => {
+        .map(({largeImageURL, webformatURL, tags, likes, views, comments, downloads}) => {
             return `<div class="photo-card"> 
-          <img src="${webformatURL}" alt="${tags}" loading="lazy" /> 
+            <a class="gallery-image" href="${largeImageURL}">
+          <img class="gallery-item" src="${webformatURL}" alt="${tags}" loading="lazy" /> 
+          </a>
           <div class="info">
           <p class="info-item"> <b>Likes</b> ${likes} </p> 
           <p class="info-item"> <b>Views</b> ${views} </p> 
@@ -83,12 +85,23 @@ function renderItems(items) {
         }).join("");
   
     galleryContainer.insertAdjacentHTML("beforeend", markup);
+    lightbox.refresh();
     loadMoreButton.classList.remove("hidden");
-    if (maxPictures >= 500) {
-        loadMoreButton.classList.add("hidden");
-        Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
-    } else if(maxPictures <= 40) {
+    if (page > 1) {
+        const { height: cardHeight = 350 } = document
+        .querySelector(".gallery")
+        .firstElementChild.getBoundingClientRect();
+
+        window.scrollBy({
+            top: cardHeight * 2,
+            behavior: "smooth",
+        });
+    }
+    if (40 >= items.totalHits) {
         loadMoreButton.classList.add("hidden");
         Notiflix.Notify.info("Hooray! We found totalHits images.");
+    } else if(maxPictures >= items.totalHits) {
+        loadMoreButton.classList.add("hidden");
+        Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
     }
 };
