@@ -82,6 +82,7 @@ button:hover {
 .load-more {
   position: relative;
   left: 50%;
+  top: 120px;
   transform: translateX(-50%);
   height: 40px;
   width: 140px;
