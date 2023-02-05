@@ -1,4 +1,5 @@
 import '../css/formGallery.css';
+import axios from 'axios';
 import Notiflix from 'notiflix';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
@@ -30,7 +31,7 @@ loadMoreButton.addEventListener("click", () => {
     });
 })
 
-const activeFetch = (e) => {
+const activeFetch = async e => {
     e.preventDefault();
     maxPictures = 0;
     loadMoreButton.classList.add("hidden");
@@ -50,21 +51,23 @@ const activeFetch = (e) => {
 
 searchButton.addEventListener("click", e => activeFetch(e));
 
-function fetchItems(itemName) {
+async function fetchItems(itemName) {
     const params = new URLSearchParams({
         page: page,
         per_page: per_page,
         orientation: orientation,
-        safesearch: safesearch
+        safesearch: safesearch,
     });
-    return fetch(`https://pixabay.com/api/?key=33296379-dab9a6cf136214dcc7548d115&q=${itemName}&image_type=photo&${params}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(response.status);
-            }
-            return response.json()
-        }).catch(error => console.log("Error: ", error));
-};
+
+    try {
+        const response = await axios.get(
+            `https://pixabay.com/api/?key=33296379-dab9a6cf136214dcc7548d115&q=${itemName}&image_type=photo&${params}`
+        );
+        return response.data;
+    } catch (error) {
+        console.log("Error: ", error);
+    }
+}
 
 function renderItems(items) {
     maxPictures += 40;
@@ -97,9 +100,10 @@ function renderItems(items) {
             behavior: "smooth",
         });
     }
-    if (40 >= items.totalHits) {
-        loadMoreButton.classList.add("hidden");
-        Notiflix.Notify.info("Hooray! We found totalHits images.");
+    if (1 <= items.totalHits < 40 && maxPictures === 40) {
+        console.log('mniej niż 40')
+        Notiflix.Notify.info(`Hooray! We found ${items.totalHits} images.`);
+        if (maxPictures >= items.totalHits) loadMoreButton.classList.add("hidden");
     } else if(maxPictures >= items.totalHits) {
         loadMoreButton.classList.add("hidden");
         Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
