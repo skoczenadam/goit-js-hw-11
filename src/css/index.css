@@ -9,6 +9,53 @@ form {
   gap: 8px;
 }
 
+.gallery {
+  width: 1128px;
+  margin: 32px auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.gallery-item {
+  width: 360px;
+  height: 200px;
+  border: 1px #808080 solid;
+}
+
+.gallery-link {
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery-image {
+  width: 360px;
+  height: 152px;
+  object-fit: cover;
+}
+
+.info {
+ display: flex;
+ justify-content: space-around;
+}
+
+.info-group {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  padding-top: 4px;
+}
+
+.info-text {
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.info-number {
+  line-height: 24px;
+}
+
 input,
 button {
   font-family: Montserrat;
